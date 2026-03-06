@@ -3,10 +3,24 @@ import Cookies from 'js-cookie';
 import { mockApi } from '@/lib/mockApi';
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-// When NEXT_PUBLIC_API_URL is not set (e.g. Vercel deploy without a backend),
-// automatically use mock mode — no HTTP requests are made, zero CORS errors.
+// Mock mode is ON when any of these are true:
+//  1. NEXT_PUBLIC_USE_MOCK=true  (set in .env.production → always true on Vercel)
+//  2. No NEXT_PUBLIC_API_URL set (build-time detection)
+//  3. Runtime: we are on a non-localhost origin trying to call a localhost URL
+//     (catches any edge-case where the wrong URL slips through)
 const CONFIGURED_URL = process.env.NEXT_PUBLIC_API_URL;
-const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK === 'true' || !CONFIGURED_URL;
+const _envMock = process.env.NEXT_PUBLIC_USE_MOCK === 'true' || !CONFIGURED_URL;
+
+function isLocalhostUrl(url) {
+  return typeof url === 'string' && (url.includes('localhost') || url.includes('127.0.0.1'));
+}
+function isPublicOrigin() {
+  if (typeof window === 'undefined') return false;
+  const host = window.location.hostname;
+  return host !== 'localhost' && host !== '127.0.0.1';
+}
+
+const USE_MOCK = _envMock || (isLocalhostUrl(CONFIGURED_URL) && isPublicOrigin());
 const BASE_URL = CONFIGURED_URL || 'http://localhost:5000/api';
 
 // ─── Custom adapter: completely bypasses the network when mock mode is active ─
