@@ -48,7 +48,7 @@ const CONTACT = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-[#080810] text-white">
       <div className="max-w-7xl mx-auto px-4 py-16">
 
         {/* Grid */}
@@ -82,7 +82,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 bg-gray-800 hover:bg-brand-600 rounded-lg flex items-center justify-center transition-colors"
+                  className="w-9 h-9 bg-white/5 border border-white/8 hover:bg-brand-600 hover:border-brand-600 rounded-lg flex items-center justify-center transition-all"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -108,7 +108,7 @@ export default function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="border-t border-gray-800 pt-8 mb-8">
+        <div className="border-t border-white/8 pt-8 mb-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
               <h3 className="font-bold text-lg">Stay in the loop</h3>
@@ -118,11 +118,11 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 md:w-72 px-4 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="flex-1 md:w-72 px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
               <button
                 type="submit"
-                className="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors shrink-0"
+                className="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shrink-0 shadow-[0_0_14px_rgba(225,29,72,0.3)]"
               >
                 Subscribe
               </button>
@@ -130,7 +130,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-gray-500">
+        <div className="border-t border-white/8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-gray-600">
           <p>© 2026 EventNest. All rights reserved. · Islamabad, Pakistan</p>
           <p>Made with ❤️ for Islamabad&apos;s community</p>
         </div>

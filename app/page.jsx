@@ -90,70 +90,68 @@ export default function HomePage() {
       <Navbar />
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-700 via-brand-600 to-purple-700 text-white">
-        {/* decorative blobs */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-20 -left-20 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent-400/20 rounded-full blur-3xl" />
-        </div>
+      <section className="relative overflow-hidden bg-[#0a0a10] text-white">
+        {/* Ambient glow */}
+        <div className="absolute inset-0 pointer-events-none" style={{backgroundImage: 'radial-gradient(ellipse 80% 50% at 8% 60%, rgba(225,29,72,0.13) 0%, transparent 55%), radial-gradient(ellipse 50% 40% at 92% 15%, rgba(225,29,72,0.07) 0%, transparent 50%)'}} />
 
-        <div className="relative max-w-7xl mx-auto px-4 py-24 sm:py-36">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              100+ events happening this weekend in your city
+        <div className="relative max-w-7xl mx-auto px-4 pt-24 pb-32 sm:pt-36 sm:pb-44">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 border border-brand-500/25 bg-brand-500/10 rounded-full px-4 py-1.5 text-xs font-bold mb-8 text-brand-300 tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 bg-brand-400 rounded-full animate-pulse" />
+              Live Now · 100+ Events This Weekend
             </div>
 
-            <h1 className="text-5xl sm:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-              Find Your Next<br />
-              <span className="text-accent-300">Local Experience</span>
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight mb-8">
+              YOUR NEXT<br />
+              <span className="text-brand-400">GREAT NIGHT</span><br />
+              STARTS HERE.
             </h1>
 
-            <p className="text-xl text-brand-100 mb-10 leading-relaxed max-w-2xl mx-auto">
-              Discover concerts, festivals, workshops, and more. Book instantly, get QR tickets, and enjoy seamless entry.
+            <p className="text-lg text-gray-400 mb-10 max-w-xl leading-relaxed">
+              Islamabad&apos;s live event platform — concerts, meetups, sports &amp; more. Book in seconds, arrive with a QR code.
             </p>
 
             {/* Search Bar */}
             <form
               onSubmit={handleSearch}
-              className="bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 shadow-2xl max-w-2xl mx-auto"
+              className="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-1.5 flex flex-col sm:flex-row gap-1.5 max-w-2xl mb-8"
             >
               <div className="flex items-center gap-3 flex-1 px-3">
-                <Search className="w-5 h-5 text-gray-400 shrink-0" />
+                <Search className="w-4 h-4 text-gray-600 shrink-0" />
                 <input
                   type="text"
                   placeholder="Search events, artists, categories…"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="flex-1 text-gray-900 text-sm py-2 outline-none bg-transparent placeholder-gray-400"
+                  className="flex-1 text-white text-sm py-2.5 outline-none bg-transparent placeholder-gray-600"
                 />
               </div>
-              <div className="flex items-center gap-2 px-3 border-t sm:border-t-0 sm:border-l border-gray-200 pt-2 sm:pt-0">
-                <MapPin className="w-5 h-5 text-gray-400 shrink-0" />
+              <div className="flex items-center gap-2 px-3 border-t sm:border-t-0 sm:border-l border-white/10 pt-1.5 sm:pt-0">
+                <MapPin className="w-4 h-4 text-gray-600 shrink-0" />
                 <input
                   type="text"
                   placeholder="City"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="w-28 text-gray-900 text-sm py-2 outline-none bg-transparent placeholder-gray-400"
+                  className="w-28 text-white text-sm py-2.5 outline-none bg-transparent placeholder-gray-600"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+                className="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 py-3 rounded-xl transition-colors text-sm shadow-[0_0_20px_rgba(225,29,72,0.3)]"
               >
                 Search
               </button>
             </form>
 
             {/* Quick links */}
-            <div className="flex items-center justify-center flex-wrap gap-2 mt-6 text-sm text-brand-200">
-              <span>Popular:</span>
+            <div className="flex items-center flex-wrap gap-2 text-sm">
+              <span className="text-gray-600 font-medium">Trending:</span>
               {['Music', 'Tech', 'Sports', 'Free Events'].map((k) => (
                 <Link
                   key={k}
                   href={`/events?q=${k}`}
-                  className="bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-3 py-1 transition-colors"
+                  className="border border-white/10 text-gray-500 hover:border-brand-500/40 hover:text-brand-400 rounded-full px-3 py-1 transition-colors"
                 >
                   {k}
                 </Link>
@@ -164,13 +162,13 @@ export default function HomePage() {
       </section>
 
       {/* ── Stats Bar ─────────────────────────────────────────────────────── */}
-      <section className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+      <section className="bg-[#111118] border-y border-white/5 text-white">
+        <div className="max-w-7xl mx-auto px-4 py-5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/5">
             {STATS.map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-3xl font-extrabold text-accent-400">{s.value}</div>
-                <div className="text-sm text-gray-400 mt-1">{s.label}</div>
+              <div key={s.label} className="text-center py-5 px-4">
+                <div className="text-3xl font-black text-brand-400">{s.value}</div>
+                <div className="text-xs text-gray-500 mt-1 uppercase tracking-widest">{s.label}</div>
               </div>
             ))}
           </div>
@@ -178,13 +176,13 @@ export default function HomePage() {
       </section>
 
       {/* ── Categories ────────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 py-16">
-        <div className="flex items-center justify-between mb-8">
+      <section className="max-w-7xl mx-auto px-4 py-20">
+        <div className="flex items-end justify-between mb-10">
           <div>
+            <p className="text-xs font-bold tracking-[0.2em] text-brand-500 uppercase mb-2">What&apos;s On</p>
             <h2 className="section-title">Browse by Category</h2>
-            <p className="section-subtitle">Find events that match your vibe</p>
           </div>
-          <Link href="/events" className="text-brand-600 hover:text-brand-700 font-medium text-sm flex items-center gap-1">
+          <Link href="/events" className="text-sm font-semibold text-gray-400 hover:text-brand-600 flex items-center gap-1 transition-colors">
             View All <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -203,14 +201,14 @@ export default function HomePage() {
       </section>
 
       {/* ── Featured Events ───────────────────────────────────────────────── */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-[#f4f4f7] py-16">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-end justify-between mb-10">
             <div>
-              <h2 className="section-title">Featured Events</h2>
-              <p className="section-subtitle">Handpicked experiences you'll love</p>
+              <p className="text-xs font-bold tracking-[0.2em] text-brand-500 uppercase mb-2">Featured</p>
+              <h2 className="section-title">Handpicked for You</h2>
             </div>
-            <Link href="/events" className="text-brand-600 hover:text-brand-700 font-medium text-sm flex items-center gap-1">
+            <Link href="/events" className="text-sm font-semibold text-gray-400 hover:text-brand-600 flex items-center gap-1 transition-colors">
               See all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -225,8 +223,8 @@ export default function HomePage() {
       {/* ── How It Works ─────────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <div className="text-center mb-14">
-          <h2 className="section-title">How EventNest Works</h2>
-          <p className="section-subtitle">From discovery to the door in minutes</p>
+          <p className="text-xs font-bold tracking-[0.2em] text-brand-500 uppercase mb-3">How It Works</p>
+          <h2 className="section-title">Three Steps to Your Next Night Out</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {HOW_IT_WORKS.map(({ icon: Icon, color, step, title, desc }) => (
@@ -243,11 +241,11 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ─────────────────────────────────────────────────── */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-[#f4f4f7] py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="section-title">Loved by thousands</h2>
-            <p className="section-subtitle">Here's what people are saying</p>
+            <p className="text-xs font-bold tracking-[0.2em] text-brand-500 uppercase mb-3">Reviews</p>
+            <h2 className="section-title">Loved by Islamabad</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
@@ -272,28 +270,26 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA Banner ───────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-r from-brand-600 to-purple-700 text-white py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-sm font-medium mb-6">
-            <Zap className="w-4 h-4 text-accent-300" />
-            Start in under 5 minutes
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
-            Ready to host your event?
+      <section className="bg-[#0a0a10] text-white py-28 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" style={{backgroundImage: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(225,29,72,0.15) 0%, transparent 65%)'}} />
+        <div className="relative max-w-3xl mx-auto px-4 text-center">
+          <p className="text-xs font-bold tracking-[0.2em] text-brand-500 uppercase mb-5">For Organizers</p>
+          <h2 className="text-5xl sm:text-6xl font-black leading-[0.9] tracking-tight mb-6">
+            HOST YOUR<br />EVENT IN<br /><span className="text-brand-400">ISLAMABAD.</span>
           </h2>
-          <p className="text-brand-100 text-lg mb-8 max-w-xl mx-auto">
-            Create your event, set up ticket tiers, and start selling — all in one place. No technical skills needed.
+          <p className="text-gray-400 text-lg mb-10 max-w-lg mx-auto leading-relaxed">
+            Create your event, set ticket prices, and start selling — all from one dashboard. No technical skills needed.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/auth/signup"
-              className="bg-white text-brand-700 hover:bg-brand-50 font-bold px-8 py-3.5 rounded-xl transition-colors"
+              className="bg-brand-600 hover:bg-brand-500 text-white font-bold px-8 py-3.5 rounded-xl transition-colors shadow-[0_0_24px_rgba(225,29,72,0.4)]"
             >
               Create Free Account
             </Link>
             <Link
               href="/events"
-              className="bg-white/10 hover:bg-white/20 border border-white/30 font-semibold px-8 py-3.5 rounded-xl transition-colors"
+              className="border border-white/15 hover:border-white/30 text-gray-300 hover:text-white font-semibold px-8 py-3.5 rounded-xl transition-colors"
             >
               Explore Events
             </Link>

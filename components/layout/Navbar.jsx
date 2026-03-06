@@ -60,13 +60,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+    <nav className="sticky top-0 z-40 bg-[#0a0a10]/95 backdrop-blur-md border-b border-white/[0.07]">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 font-extrabold text-xl text-brand-700 shrink-0">
-            <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow-sm">
+          <Link href="/" className="flex items-center gap-2.5 font-extrabold text-xl text-white shrink-0">
+            <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow-[0_0_14px_rgba(225,29,72,0.5)]">
               <Ticket className="w-5 h-5 text-white" />
             </div>
             EventNest
@@ -81,8 +81,8 @@ export default function Navbar() {
                 className={cn(
                   'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                   pathname === link.href
-                    ? 'bg-brand-50 text-brand-700'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'bg-brand-600/15 text-brand-400'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
                 )}
               >
                 {link.label}
@@ -96,46 +96,46 @@ export default function Navbar() {
               <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/5 transition-colors"
                 >
-                  <div className="w-8 h-8 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold text-sm shrink-0">
+                  <div className="w-8 h-8 bg-brand-900/40 border border-brand-600/40 rounded-full flex items-center justify-center text-brand-400 font-bold text-sm shrink-0">
                     {user.name?.[0]?.toUpperCase() || 'U'}
                   </div>
-                  <span className="text-sm font-medium text-gray-700">{user.name?.split(' ')[0]}</span>
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm font-medium text-gray-300">{user.name?.split(' ')[0]}</span>
+                  <ChevronDown className="w-4 h-4 text-gray-500" />
                 </button>
 
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
-                    <div className="px-4 py-2.5 border-b border-gray-100">
-                      <p className="font-semibold text-sm text-gray-900">{user.name}</p>
+                  <div className="absolute right-0 mt-1 w-52 bg-[#16161e] rounded-xl shadow-2xl border border-white/10 py-1 z-50">
+                    <div className="px-4 py-2.5 border-b border-white/10">
+                      <p className="font-semibold text-sm text-white">{user.name}</p>
                       <p className="text-xs text-gray-500 capitalize">{user.role || 'attendee'}</p>
                     </div>
                     <Link
                       href={getDashboardLink()}
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       <LayoutDashboard className="w-4 h-4" /> Dashboard
                     </Link>
                     <Link
                       href="/my-tickets"
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       <QrCode className="w-4 h-4" /> My Tickets
                     </Link>
                     <Link
                       href="/profile"
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white"
                       onClick={() => setUserMenuOpen(false)}
                     >
                       <UserCircle className="w-4 h-4" /> My Profile
                     </Link>
-                    <hr className="my-1 border-gray-100" />
+                    <hr className="my-1 border-white/10" />
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                      className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-400 hover:bg-red-500/10"
                     >
                       <LogOut className="w-4 h-4" /> Log Out
                     </button>
@@ -144,7 +144,7 @@ export default function Navbar() {
               </div>
             ) : (
               <>
-                <Link href="/auth/login" className="text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-2">
+                <Link href="/auth/login" className="text-sm font-medium text-gray-400 hover:text-white px-3 py-2 transition-colors">
                   Log In
                 </Link>
                 <Link href="/auth/signup">
@@ -156,7 +156,7 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-50 transition-colors"
+            className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -167,31 +167,31 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white px-4 pb-4 shadow-lg">
+        <div className="md:hidden border-t border-white/5 bg-[#0a0a10] px-4 pb-4">
           <div className="flex flex-col gap-1 pt-3">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
+                className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <hr className="my-2 border-gray-100" />
+            <hr className="my-2 border-white/10" />
             {user ? (
               <>
-                <Link href={getDashboardLink()} className="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileOpen(false)}>
+                <Link href={getDashboardLink()} className="px-3 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white rounded-lg" onClick={() => setMobileOpen(false)}>
                   Dashboard
                 </Link>
-                <Link href="/my-tickets" className="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileOpen(false)}>
+                <Link href="/my-tickets" className="px-3 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white rounded-lg" onClick={() => setMobileOpen(false)}>
                   My Tickets
                 </Link>
-                <Link href="/profile" className="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileOpen(false)}>
+                <Link href="/profile" className="px-3 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white rounded-lg" onClick={() => setMobileOpen(false)}>
                   My Profile
                 </Link>
-                <button onClick={handleLogout} className="px-3 py-2.5 text-sm font-medium text-red-600 text-left hover:bg-red-50 rounded-lg">
+                <button onClick={handleLogout} className="px-3 py-2.5 text-sm font-medium text-red-400 text-left hover:bg-red-500/10 rounded-lg">
                   Log Out
                 </button>
               </>
