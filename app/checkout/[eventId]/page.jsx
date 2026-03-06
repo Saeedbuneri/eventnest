@@ -73,8 +73,25 @@ function CheckoutContent({ eventId }) {
   const fee      = Math.round(subtotal * 0.05 * 100) / 100;
   const total    = subtotal + fee;
 
-  const attendeeForm = useForm({ resolver: zodResolver(attendeeSchema) });
-  const paymentForm  = useForm({ resolver: zodResolver(paymentSchema) });
+  const attendeeForm = useForm({
+    resolver: zodResolver(attendeeSchema),
+    defaultValues: {
+      firstName: 'Ahmed',
+      lastName:  'Khan',
+      email:     'ahmed.khan@test.pk',
+      phone:     '+92 300 1234567',
+    },
+  });
+  const paymentForm = useForm({
+    resolver: zodResolver(paymentSchema),
+    defaultValues: {
+      cardName:   'Ahmed Khan',
+      cardNumber: '4111 1111 1111 1111',
+      expiry:     '12/27',
+      cvv:        '123',
+      promoCode:  '',
+    },
+  });
 
   const onAttendeeSubmit = (data) => {
     setAttendeeData(data);

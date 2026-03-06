@@ -5,13 +5,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   Search, MapPin, ArrowRight, Ticket, QrCode, CheckCircle,
-  Users, Star, Zap,
+  Users, Star, Zap, CalendarDays,
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import EventCard from '@/components/events/EventCard';
 import { EVENT_CATEGORIES } from '@/lib/constants';
 import { api } from '@/lib/api';
+import { getLocalEvents } from '@/lib/localSeed';
 
 const STATS = [
   { value: '50K+', label: 'Tickets Sold'   },
@@ -69,12 +70,17 @@ export default function HomePage() {
   const [query,    setQuery]    = useState('');
   const [city,     setCity]     = useState('');
   const [featured, setFeatured] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     api.get('/events', { params: { featured: true, limit: 6 } })
       .then((res) => setFeatured(res.data.events || []))
       .catch(() => {});
+
+    api.get('/events', { params: { upcoming: true, limit: 6 } })
+      .then((res) => setUpcoming(res.data.events || []))
+      .catch(() => setUpcoming(getLocalEvents({ upcoming: true })));
   }, []);
 
   const handleSearch = (e) => {
@@ -219,6 +225,39 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Upcoming Events ──────────────────────────────────────────────── */}
+      {upcoming.length > 0 && (
+        <section className="bg-[#0a0a10] text-white py-16">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <p className="text-xs font-bold tracking-[0.2em] text-brand-500 uppercase mb-2">Coming Up</p>
+                <h2 className="text-4xl font-black tracking-tight">Don&apos;t Miss These</h2>
+              </div>
+              <Link href="/events" className="text-sm font-semibold text-gray-400 hover:text-brand-400 flex items-center gap-1 transition-colors">
+                See all <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {upcoming.map((event) => (
+                <div key={event._id || event.id} className="relative group">
+                  {/* Date badge */}
+                  <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-black/70 backdrop-blur-sm border border-white/10 rounded-lg px-2.5 py-1.5">
+                    <CalendarDays className="w-3.5 h-3.5 text-brand-400" />
+                    <span className="text-xs font-bold text-white">
+                      {event.startDate
+                        ? new Date(event.startDate).toLocaleDateString('en-PK', { day: 'numeric', month: 'short' })
+                        : 'Upcoming'}
+                    </span>
+                  </div>
+                  <EventCard event={event} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── How It Works ─────────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 py-20">

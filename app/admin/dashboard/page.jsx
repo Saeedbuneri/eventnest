@@ -8,10 +8,13 @@ import {
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatsCard from '@/components/dashboard/StatsCard';
 import RevenueChart from '@/components/dashboard/RevenueChart';
+import TicketsChart from '@/components/dashboard/TicketsChart';
+import CategoryPieChart from '@/components/dashboard/CategoryPieChart';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { api } from '@/lib/api';
 import { formatDate, formatCurrency } from '@/lib/utils';
+import { getLocalRevenue, getLocalCategories, getLocalEvents } from '@/lib/localSeed';
 
 const statusMap = {
   active:    { variant: 'success', label: 'Active'    },
@@ -21,6 +24,8 @@ const statusMap = {
 
 export default function AdminDashboard() {
   const [stats,   setStats]   = useState(null);
+  const [revenue,  setRevenue]  = useState([]);
+  const [categories, setCategories] = useState([]);
   const [events,  setEvents]  = useState([]);
   const [users,   setUsers]   = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,10 +38,16 @@ export default function AdminDashboard() {
     ])
       .then(([statsRes, evtsRes, usersRes]) => {
         setStats(statsRes.data);
-        setEvents(evtsRes.data.events   || []);
+        setRevenue(getLocalRevenue());
+        setCategories(getLocalCategories());
+        setEvents(evtsRes.data.events   || getLocalEvents());
         setUsers(usersRes.data.users    || []);
       })
-      .catch(() => {})
+      .catch(() => {
+        setRevenue(getLocalRevenue());
+        setCategories(getLocalCategories());
+        setEvents(getLocalEvents());
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -65,6 +76,17 @@ export default function AdminDashboard() {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
             {STAT_CARDS.map((s) => <StatsCard key={s.title} {...s} />)}
+          </div>
+
+          {/* Charts row */}
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 mb-6">
+            <div className="xl:col-span-2">
+              <RevenueChart data={revenue} title="Platform Revenue" />
+            </div>
+            <CategoryPieChart data={categories} />
+          </div>
+          <div className="mb-6">
+            <TicketsChart data={revenue} />
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-5">

@@ -8,15 +8,19 @@ import {
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatsCard from '@/components/dashboard/StatsCard';
 import RevenueChart from '@/components/dashboard/RevenueChart';
+import TicketsChart from '@/components/dashboard/TicketsChart';
+import CategoryPieChart from '@/components/dashboard/CategoryPieChart';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { api } from '@/lib/api';
 import { formatDate, formatCurrency } from '@/lib/utils';
+import { getLocalRevenue, getLocalCategories } from '@/lib/localSeed';
 
 export default function OrganizerDashboard() {
   const [stats,    setStats]    = useState(null);
   const [revenue,  setRevenue]  = useState([]);
+  const [categories, setCategories] = useState([]);
   const [events,   setEvents]   = useState([]);
   const [bookings, setBookings] = useState([]);
   const [loading,  setLoading]  = useState(true);
@@ -29,10 +33,15 @@ export default function OrganizerDashboard() {
     ])
       .then(([statsRes, revRes, evtsRes]) => {
         setStats(statsRes.data);
-        setRevenue(revRes.data);
+        const rev = revRes.data?.length ? revRes.data : getLocalRevenue();
+        setRevenue(rev);
+        setCategories(getLocalCategories());
         setEvents(evtsRes.data.events || []);
       })
-      .catch(() => {})
+      .catch(() => {
+        setRevenue(getLocalRevenue());
+        setCategories(getLocalCategories());
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -85,6 +94,12 @@ export default function OrganizerDashboard() {
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* Tickets + Categories */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mb-6">
+            <TicketsChart data={revenue} />
+            <CategoryPieChart data={categories} />
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">

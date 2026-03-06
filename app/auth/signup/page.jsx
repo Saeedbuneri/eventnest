@@ -46,7 +46,14 @@ export default function SignupPage() {
 
   const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { role: 'attendee' },
+    defaultValues: {
+      name:            'Ali Hassan',
+      email:           'ali.hassan@test.pk',
+      password:        'Test1234!',
+      confirmPassword: 'Test1234!',
+      role:            'attendee',
+      terms:           false,
+    },
   });
 
   const selectedRole = watch('role');

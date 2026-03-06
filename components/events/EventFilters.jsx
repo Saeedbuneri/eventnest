@@ -13,10 +13,12 @@ export default function EventFilters({ className }) {
   const [category, setCategory] = useState(searchParams.get('category') || '');
   const [price,    setPrice]    = useState(searchParams.get('price') || '');
   const [sort,     setSort]     = useState(searchParams.get('sort') || 'date-asc');
+  const [dateFrom, setDateFrom] = useState(searchParams.get('dateFrom') || '');
+  const [dateTo,   setDateTo]   = useState(searchParams.get('dateTo') || '');
 
   const applyFilters = (overrides = {}) => {
     const params = new URLSearchParams(searchParams.toString());
-    const merged = { category, price, sort, ...overrides };
+    const merged = { category, price, sort, dateFrom, dateTo, ...overrides };
 
     Object.entries(merged).forEach(([k, v]) => {
       if (v) params.set(k, v);
@@ -43,11 +45,11 @@ export default function EventFilters({ className }) {
   };
 
   const clearAll = () => {
-    setCategory(''); setPrice(''); setSort('date-asc');
+    setCategory(''); setPrice(''); setSort('date-asc'); setDateFrom(''); setDateTo('');
     router.push('/events');
   };
 
-  const hasFilters = category || price;
+  const hasFilters = category || price || dateFrom || dateTo;
 
   return (
     <aside className={cn('w-full', className)}>
@@ -131,6 +133,39 @@ export default function EventFilters({ className }) {
               {opt.label}
             </button>
           ))}
+        </div>
+
+        {/* Date Range */}
+        <div>
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Date Range</h3>
+          <div className="space-y-2">
+            <div>
+              <label className="text-xs text-gray-500 mb-1 block">From</label>
+              <input
+                type="date"
+                value={dateFrom}
+                onChange={(e) => { setDateFrom(e.target.value); applyFilters({ dateFrom: e.target.value }); }}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 transition"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500 mb-1 block">To</label>
+              <input
+                type="date"
+                value={dateTo}
+                onChange={(e) => { setDateTo(e.target.value); applyFilters({ dateTo: e.target.value }); }}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 transition"
+              />
+            </div>
+            {(dateFrom || dateTo) && (
+              <button
+                onClick={() => { setDateFrom(''); setDateTo(''); applyFilters({ dateFrom: '', dateTo: '' }); }}
+                className="text-xs text-red-500 hover:text-red-600"
+              >
+                Clear dates
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </aside>

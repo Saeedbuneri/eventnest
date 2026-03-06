@@ -18,18 +18,18 @@ const FOOTER_COLS = {
     { label: 'Promo Codes',          href: '/organizer/events' },
   ],
   Company: [
-    { label: 'About Us',     href: '#about' },
-    { label: 'Our Story',    href: '#about' },
+    { label: 'About Us',     href: '/about' },
+    { label: 'Our Story',    href: '/about' },
     { label: 'Careers',      href: 'mailto:careers@eventnest.pk' },
     { label: 'Press Kit',    href: 'mailto:press@eventnest.pk' },
-    { label: 'Contact Us',   href: 'mailto:hello@eventnest.pk' },
+    { label: 'Contact Us',   href: '/contact' },
   ],
   Support: [
-    { label: 'Help Center',       href: 'mailto:support@eventnest.pk' },
+    { label: 'Help Center',       href: '/contact' },
     { label: 'Privacy Policy',    href: '#' },
     { label: 'Terms of Service',  href: '#' },
     { label: 'Refund Policy',     href: '#' },
-    { label: 'Report an Issue',   href: 'mailto:support@eventnest.pk' },
+    { label: 'Report an Issue',   href: '/contact' },
   ],
 };
 

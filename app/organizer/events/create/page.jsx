@@ -52,18 +52,42 @@ const settingsSchema = z.object({
 export default function CreateEventPage() {
   const [step,      setStep]      = useState(1);
   const [formData,  setFormData]  = useState({});
-  const [bannerUrl, setBannerUrl] = useState('');
+  const [bannerUrl, setBannerUrl] = useState('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const basicForm = useForm({ resolver: zodResolver(basicSchema) });
+  const basicForm = useForm({
+    resolver: zodResolver(basicSchema),
+    defaultValues: {
+      title:       'Islamabad Music Festival 2026',
+      description: 'Join us for a night of live music featuring top artists from across Pakistan. Food stalls, art installations and more — the biggest outdoor festival in the twin cities this year.',
+      category:    'music',
+      address:     'F-9 Park, Islamabad',
+      city:        'Islamabad',
+      startDate:   '2026-04-15',
+      startTime:   '18:00',
+      endDate:     '2026-04-15',
+      endTime:     '23:00',
+    },
+  });
   const ticketsForm = useForm({
     resolver: zodResolver(ticketsSchema),
     defaultValues: {
-      ticketTypes: [{ name: 'General', price: 0, quantity: 100, maxPerUser: 10 }],
+      ticketTypes: [
+        { name: 'General Admission', price: 500,  quantity: 300, maxPerUser: 4 },
+        { name: 'VIP',              price: 1500, quantity: 50,  maxPerUser: 2 },
+      ],
     },
   });
-  const settingsForm = useForm({ resolver: zodResolver(settingsSchema), defaultValues: { isPublic: true } });
+  const settingsForm = useForm({
+    resolver: zodResolver(settingsSchema),
+    defaultValues: {
+      isPublic:      true,
+      refundPolicy:  '48hours',
+      promoCode:     'ISB2026',
+      promoDiscount: 15,
+    },
+  });
 
   const { fields, append, remove } = useFieldArray({ control: ticketsForm.control, name: 'ticketTypes' });
 

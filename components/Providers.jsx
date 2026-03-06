@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from '@/context/AuthContext';
+import Chatbot from '@/components/ui/Chatbot';
+import { seedLocalStorage } from '@/lib/localSeed';
 
 export function Providers({ children }) {
   const [queryClient] = useState(
@@ -15,10 +17,13 @@ export function Providers({ children }) {
       })
   );
 
+  useEffect(() => { seedLocalStorage(); }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         {children}
+        <Chatbot />
         <Toaster
           position="top-right"
           toastOptions={{
