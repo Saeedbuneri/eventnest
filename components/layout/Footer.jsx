@@ -1,39 +1,49 @@
 import Link from 'next/link';
-import { Ticket, Twitter, Instagram, Facebook, Linkedin } from 'lucide-react';
+import { Ticket, Twitter, Instagram, Facebook, Linkedin, MapPin, Phone, Mail } from 'lucide-react';
 
 const FOOTER_COLS = {
   Discover: [
-    { label: 'Browse Events',   href: '/events' },
-    { label: 'Music',           href: '/events?category=music' },
-    { label: 'Technology',      href: '/events?category=tech' },
-    { label: 'Sports',          href: '/events?category=sports' },
-    { label: 'Free Events',     href: '/events?price=free' },
+    { label: 'Browse Events',        href: '/events' },
+    { label: 'Music & Concerts',     href: '/events?category=music' },
+    { label: 'Tech & Startups',      href: '/events?category=tech' },
+    { label: 'Sports & Fitness',     href: '/events?category=sports' },
+    { label: 'Food & Culture',       href: '/events?category=food' },
+    { label: 'Free Events',          href: '/events?price=free' },
   ],
   Organize: [
-    { label: 'Create Event',        href: '/organizer/events/create' },
-    { label: 'Organizer Dashboard', href: '/organizer/dashboard' },
-    { label: 'Manage Tickets',      href: '/organizer/events' },
-    { label: 'Scan QR Tickets',     href: '/staff/scan' },
+    { label: 'Create Event',         href: '/organizer/events/create' },
+    { label: 'Organizer Dashboard',  href: '/organizer/dashboard' },
+    { label: 'Manage Tickets',       href: '/organizer/events' },
+    { label: 'Scan QR Tickets',      href: '/staff/scan' },
+    { label: 'Promo Codes',          href: '/organizer/events' },
   ],
   Company: [
-    { label: 'About Us',  href: '#' },
-    { label: 'Blog',      href: '#' },
-    { label: 'Careers',   href: '#' },
-    { label: 'Contact',   href: '#' },
+    { label: 'About Us',     href: '#about' },
+    { label: 'Our Story',    href: '#about' },
+    { label: 'Careers',      href: 'mailto:careers@eventnest.pk' },
+    { label: 'Press Kit',    href: 'mailto:press@eventnest.pk' },
+    { label: 'Contact Us',   href: 'mailto:hello@eventnest.pk' },
   ],
   Support: [
-    { label: 'Help Center',     href: '#' },
-    { label: 'Privacy Policy',  href: '#' },
-    { label: 'Terms of Service',href: '#' },
-    { label: 'Refund Policy',   href: '#' },
+    { label: 'Help Center',       href: 'mailto:support@eventnest.pk' },
+    { label: 'Privacy Policy',    href: '#' },
+    { label: 'Terms of Service',  href: '#' },
+    { label: 'Refund Policy',     href: '#' },
+    { label: 'Report an Issue',   href: 'mailto:support@eventnest.pk' },
   ],
 };
 
 const SOCIALS = [
-  { Icon: Twitter,   href: '#', label: 'Twitter'   },
-  { Icon: Instagram, href: '#', label: 'Instagram' },
-  { Icon: Facebook,  href: '#', label: 'Facebook'  },
-  { Icon: Linkedin,  href: '#', label: 'LinkedIn'  },
+  { Icon: Twitter,   href: 'https://twitter.com/eventnestpk',              label: 'Twitter'   },
+  { Icon: Instagram, href: 'https://instagram.com/eventnestpk',            label: 'Instagram' },
+  { Icon: Facebook,  href: 'https://facebook.com/eventnestpk',             label: 'Facebook'  },
+  { Icon: Linkedin,  href: 'https://linkedin.com/company/eventnestpk',     label: 'LinkedIn'  },
+];
+
+const CONTACT = [
+  { Icon: MapPin, text: 'F-7 Markaz, Islamabad, Pakistan' },
+  { Icon: Phone,  text: '+92 51 111 000 111' },
+  { Icon: Mail,   text: 'hello@eventnest.pk' },
 ];
 
 export default function Footer() {
@@ -53,13 +63,24 @@ export default function Footer() {
               EventNest
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
-              Your local hub for discovering and booking events. Secure tickets, QR entry, real memories.
+              Islamabad&apos;s premier event ticketing platform. Discover concerts, tech meetups, sports events and more across the twin cities.
             </p>
+            {/* Contact info */}
+            <ul className="space-y-2 mb-5">
+              {CONTACT.map(({ Icon, text }) => (
+                <li key={text} className="flex items-start gap-2 text-gray-400 text-xs">
+                  <Icon className="w-3.5 h-3.5 mt-0.5 shrink-0 text-brand-400" />
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ul>
             <div className="flex items-center gap-2">
               {SOCIALS.map(({ Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="w-9 h-9 bg-gray-800 hover:bg-brand-600 rounded-lg flex items-center justify-center transition-colors"
                 >
@@ -91,7 +112,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
               <h3 className="font-bold text-lg">Stay in the loop</h3>
-              <p className="text-gray-400 text-sm mt-1">Get notified about trending events near you</p>
+              <p className="text-gray-400 text-sm mt-1">Get notified about events happening in Islamabad &amp; Rawalpindi</p>
             </div>
             <form className="flex gap-2 w-full md:w-auto" onSubmit={(e) => e.preventDefault()}>
               <input
@@ -110,8 +131,8 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-gray-500">
-          <p>© 2026 EventNest. All rights reserved.</p>
-          <p>Made with ❤️ for local communities</p>
+          <p>© 2026 EventNest. All rights reserved. · Islamabad, Pakistan</p>
+          <p>Made with ❤️ for Islamabad&apos;s community</p>
         </div>
       </div>
     </footer>
