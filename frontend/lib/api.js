@@ -2,62 +2,60 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { mockApi } from '@/lib/mockApi';
 
-// In the separate frontend/backend setup, point to the Express backend.
-// Set NEXT_PUBLIC_API_URL in frontend/.env.local to your backend URL.
-// Set NEXT_PUBLIC_USE_MOCK=true to always use mock data (no backend required).
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK === 'true';
+// ─── Config ───────────────────────────────────────────────────────────────────
+// When NEXT_PUBLIC_API_URL is not set (e.g. Vercel deploy without a backend),
+// automatically use mock mode — no HTTP requests are made, zero CORS errors.
+const CONFIGURED_URL = process.env.NEXT_PUBLIC_API_URL;
+const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK === 'true' || !CONFIGURED_URL;
+const BASE_URL = CONFIGURED_URL || 'http://localhost:5000/api';
 
+// ─── Custom adapter: completely bypasses the network when mock mode is active ─
+// This means NO loopback/CORS errors on Vercel — data comes directly from
+// mockApi.js without any HTTP request ever leaving the browser.
+async function mockAdapter(config) {
+  let path = config.url || '';
+  if (path.startsWith(BASE_URL)) path = path.slice(BASE_URL.length);
+  if (!path.startsWith('/')) path = '/' + path;
+
+  const method = (config.method || 'get').toLowerCase();
+  let body = {};
+  if (config.data) {
+    try { body = typeof config.data === 'string' ? JSON.parse(config.data) : config.data; } catch {}
+  }
+
+  let result;
+  switch (method) {
+    case 'get':    result = await mockApi.get(path, { params: config.params || {} }); break;
+    case 'post':   result = await mockApi.post(path, body);   break;
+    case 'put':    result = await mockApi.put(path, body);    break;
+    case 'patch':  result = await mockApi.patch(path, body);  break;
+    case 'delete': result = await mockApi.delete(path);       break;
+    default: throw new Error(`mockAdapter: unsupported method ${method}`);
+  }
+
+  return { data: result.data, status: result.status || 200, statusText: 'OK', headers: {}, config, request: {} };
+}
+
+// ─── Axios instance ───────────────────────────────────────────────────────────
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-  timeout: 15000,
+  timeout: USE_MOCK ? undefined : 15000,
+  // Plug in mock adapter when no backend is configured — avoids any network call
+  ...(USE_MOCK ? { adapter: mockAdapter } : {}),
 });
 
-// Attach JWT token to every request
+// Attach JWT token to every real request
 api.interceptors.request.use((config) => {
   const token = Cookies.get('en_token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
-  // Short-circuit to mock immediately if mock mode is forced
-  if (USE_MOCK) config.__useMock = true;
   return config;
 });
 
-// Serve mock data when backend is unavailable (network error) or forced via env var
+// Handle 401 from a real backend (mock mode never reaches here)
 api.interceptors.response.use(
   (res) => res,
-  async (err) => {
-    const config = err.config || {};
-    const isNetworkError = !err.response;  // backend offline / CORS / timeout
-    const isMockForced   = config.__useMock;
-
-    if (isNetworkError || isMockForced) {
-      // Normalise path: strip the baseURL prefix if present
-      let path = config.url || '';
-      if (path.startsWith(BASE_URL)) path = path.slice(BASE_URL.length);
-      if (!path.startsWith('/')) path = '/' + path;
-
-      const method = (config.method || 'get').toLowerCase();
-      try {
-        let params = config.params || {};
-        if (config.data) {
-          try { params = typeof config.data === 'string' ? JSON.parse(config.data) : config.data; } catch {}
-        }
-
-        switch (method) {
-          case 'get':    return await mockApi.get(path, { params: config.params || {} });
-          case 'post':   return await mockApi.post(path, typeof config.data === 'string' ? JSON.parse(config.data || '{}') : (config.data || {}));
-          case 'put':    return await mockApi.put(path,   typeof config.data === 'string' ? JSON.parse(config.data || '{}') : (config.data || {}));
-          case 'patch':  return await mockApi.patch(path, typeof config.data === 'string' ? JSON.parse(config.data || '{}') : (config.data || {}));
-          case 'delete': return await mockApi.delete(path);
-        }
-      } catch (mockErr) {
-        // Mock threw a real error (e.g. 401 / 404) — pass it on
-        return Promise.reject(mockErr);
-      }
-    }
-
-    // Real backend error — handle 401 globally
+  (err) => {
     if (err.response?.status === 401) {
       Cookies.remove('en_token');
       localStorage.removeItem('en_user');
