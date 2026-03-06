@@ -18,17 +18,23 @@ export function AuthProvider({ children }) {
     const saved = localStorage.getItem('en_user');
     if (saved) { try { setUser(JSON.parse(saved)); } catch {} }
 
-    // Then fetch fresh user from DB — picks up any role changes made by admin
+    // Then fetch fresh user from DB — picks up any role changes made by admin.
+    // In mock / offline mode the api interceptor returns mock data automatically.
     api.get('/auth/me')
       .then(({ data }) => {
         localStorage.setItem('en_user', JSON.stringify(data.user));
         setUser(data.user);
       })
-      .catch(() => {
-        // Token invalid / expired — clear everything
-        Cookies.remove('en_token');
-        localStorage.removeItem('en_user');
-        setUser(null);
+      .catch((err) => {
+        // Only clear the session when the backend explicitly returns 401.
+        // A network error in offline mode is handled by the mock interceptor,
+        // so by the time we reach here it is a genuine auth failure.
+        if (err?.response?.status === 401) {
+          Cookies.remove('en_token');
+          localStorage.removeItem('en_user');
+          setUser(null);
+        }
+        // Any other error (5xx, unexpected) — keep the locally cached user
       })
       .finally(() => setLoading(false));
   }, []);
