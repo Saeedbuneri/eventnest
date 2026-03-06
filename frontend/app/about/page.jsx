@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Ticket, Users, MapPin, Zap, ShieldCheck, Heart } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
