@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { MOCK_EVENTS, MOCK_MY_TICKETS } from '@/lib/constants';
-import api from '@/lib/api';
+import { api } from '@/lib/api';
 
 /**
  * Fetch all events with optional filtering params.
