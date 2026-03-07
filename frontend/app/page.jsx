@@ -288,7 +288,7 @@ export default function HomePage() {
       </section>
 
       {/*  CATEGORIES  */}
-      <section className="py-20">
+      <section className="py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <Reveal className="flex items-end justify-between mb-10">
             <div>
@@ -299,16 +299,28 @@ export default function HomePage() {
               All events <ArrowRight className="w-4 h-4" />
             </Link>
           </Reveal>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {EVENT_CATEGORIES.map((cat, i) => (
-              <Reveal key={cat.id} delay={i * 35} className="h-full">
-                <Link href={`/events?category=${cat.id}`}
-                  className="group flex flex-col items-center gap-2.5 p-4 h-full rounded-2xl bg-white/[.03] border border-white/[.07] hover:bg-white/[.07] hover:border-brand-500/30 hover:shadow-[0_8px_32px_rgba(225,29,72,.08)] transition-all cursor-pointer">
+        </div>
+        {/* Infinite marquee — overflows the max-w container intentionally */}
+        <div className="relative">
+          {/* Left fade */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: 'linear-gradient(90deg, #07070e 0%, transparent 100%)' }} />
+          {/* Right fade */}
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: 'linear-gradient(270deg, #07070e 0%, transparent 100%)' }} />
+
+          <div className="overflow-hidden">
+            {/* Duplicate the list so it loops seamlessly */}
+            <div className="animate-marquee gap-3 px-3">
+              {[...EVENT_CATEGORIES, ...EVENT_CATEGORIES].map((cat, i) => (
+                <Link
+                  key={`${cat.id}-${i}`}
+                  href={`/events?category=${cat.id}`}
+                  className="group inline-flex flex-col items-center gap-2.5 p-4 mx-1.5 rounded-2xl bg-white/[.03] border border-white/[.07] hover:bg-white/[.07] hover:border-brand-500/30 hover:shadow-[0_8px_32px_rgba(225,29,72,.08)] transition-all cursor-pointer w-[100px] shrink-0"
+                >
                   <span className="text-2xl group-hover:scale-110 transition-transform duration-200">{cat.icon}</span>
                   <span className="text-[11px] font-semibold text-gray-500 group-hover:text-white text-center leading-tight">{cat.label}</span>
                 </Link>
-              </Reveal>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
