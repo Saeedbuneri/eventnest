@@ -60,10 +60,10 @@ export default function AdminDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center  justify-between mb-6 ">
         <div>
           <h1 className="text-2xl font-extrabold text-white">Admin Dashboard</h1>
-          <p className="text-sm text-gray-400 mt-0.5">Platform-wide overview</p>
+          <p className="text-sm text-white mt-0.5">Platform-wide overview</p>
         </div>
           <div className="flex items-center gap-2 bg-brand-500/10 text-brand-400 px-3 py-2 rounded-xl text-sm font-medium">
           <ShieldAlert className="w-4 h-4" /> Admin Mode
@@ -111,8 +111,12 @@ export default function AdminDashboard() {
                   <tbody className="divide-y divide-white/[.05]">
                     {events.map((e) => (
                       <tr key={e._id} className="hover:bg-white/[.03]">
-                        <td className="py-3 px-3 font-medium text-gray-200 line-clamp-1 max-w-[200px]">{e.title}</td>
-                        <td className="py-3 px-3 text-gray-400">{e.organizer?.name || ''}</td>
+                        <td className="py-3 px-3 max-w-[180px]">
+                          <p className="font-medium text-gray-200 truncate">{e.title}</p>
+                        </td>
+                        <td className="py-3 px-3 max-w-[140px]">
+                          <p className="text-gray-400 truncate">{e.organizer?.name || ''}</p>
+                        </td>
                         <td className="py-3 px-3 text-gray-400 whitespace-nowrap">{formatDate(e.startDate || e.startTime)}</td>
                         <td className="py-3 px-3"><Badge variant={e.status === 'published' ? 'success' : 'warning'} dot>{e.status}</Badge></td>
                       </tr>
@@ -147,13 +151,15 @@ export default function AdminDashboard() {
                       const s = statusMap[u.status] || statusMap.active;
                       return (
                         <tr key={u._id} className="hover:bg-white/[.03]">
-                          <td className="py-3.5 px-3">
+                          <td className="py-3.5 px-3 max-w-[160px]">
                             <div className="flex items-center gap-2">
                               <div className="w-7 h-7 bg-brand-500/10 rounded-full flex items-center justify-center text-brand-400 font-bold text-xs shrink-0">{u.name?.[0] || '?'}</div>
-                              <span className="text-gray-200">{u.name}</span>
+                              <span className="text-gray-200 truncate">{u.name}</span>
                             </div>
                           </td>
-                          <td className="py-3.5 px-3 text-gray-400">{u.email}</td>
+                          <td className="py-3.5 px-3 max-w-[180px]">
+                            <p className="text-gray-400 truncate">{u.email}</p>
+                          </td>
                           <td className="py-3.5 px-3"><Badge variant={u.role === 'organizer' ? 'brand' : 'default'} className="capitalize">{u.role}</Badge></td>
                           <td className="py-3.5 px-3"><Badge variant={s.variant} dot>{s.label}</Badge></td>
                         </tr>

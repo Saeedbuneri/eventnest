@@ -3,11 +3,11 @@ import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 export default function StatsCard({ title, value, icon: Icon, change, changeLabel, color = 'brand' }) {
   const colors = {
-    brand:  { bg: 'bg-brand-50',  icon: 'text-brand-600',  iconBg: 'bg-brand-100'  },
-    green:  { bg: 'bg-green-50',  icon: 'text-green-600',  iconBg: 'bg-green-100'  },
-    orange: { bg: 'bg-orange-50', icon: 'text-orange-600', iconBg: 'bg-orange-100' },
-    blue:   { bg: 'bg-blue-50',   icon: 'text-blue-600',   iconBg: 'bg-blue-100'   },
-    purple: { bg: 'bg-purple-50', icon: 'text-purple-600', iconBg: 'bg-purple-100' },
+    brand:  { bg: 'bg-brand-500/10',  icon: 'text-brand-400',  iconBg: 'bg-brand-500/15'  },
+    green:  { bg: 'bg-green-500/10',  icon: 'text-green-400',  iconBg: 'bg-green-500/15'  },
+    orange: { bg: 'bg-orange-500/10', icon: 'text-orange-400', iconBg: 'bg-orange-500/15' },
+    blue:   { bg: 'bg-blue-500/10',   icon: 'text-blue-400',   iconBg: 'bg-blue-500/15'   },
+    purple: { bg: 'bg-purple-500/10', icon: 'text-purple-400', iconBg: 'bg-purple-500/15' },
   };
   const c = colors[color] || colors.brand;
 
@@ -20,8 +20,8 @@ export default function StatsCard({ title, value, icon: Icon, change, changeLabe
         <Icon className={cn('w-6 h-6', c.icon)} />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-sm text-gray-500 truncate">{title}</p>
-        <p className="text-2xl font-extrabold text-gray-900 leading-tight">{value}</p>
+        <p className="text-sm text-gray-400 truncate">{title}</p>
+        <p className="text-2xl font-extrabold text-white leading-tight">{value}</p>
         {change !== undefined && (
           <div className="flex items-center gap-1 mt-0.5">
             {isNeutral ? (
