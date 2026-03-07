@@ -21,10 +21,16 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [mobileOpen,   setMobileOpen]   = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [activeHref,   setActiveHref]   = useState('');
   const { user, logout } = useAuth();
   const pathname = usePathname();
   const router   = useRouter();
   const userMenuRef = useRef(null);
+
+  // Sync active link with current URL (including query string)
+  useEffect(() => {
+    setActiveHref(pathname + (typeof window !== 'undefined' ? window.location.search : ''));
+  }, [pathname]);
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -78,9 +84,10 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setActiveHref(link.href)}
                 className={cn(
                   'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                  pathname === link.href
+                  activeHref === link.href
                     ? 'bg-brand-600/15 text-brand-400'
                     : 'text-gray-400 hover:text-white hover:bg-white/5'
                 )}
@@ -173,8 +180,13 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white"
-                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  'px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                  activeHref === link.href
+                    ? 'bg-brand-600/15 text-brand-400'
+                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                )}
+                onClick={() => { setMobileOpen(false); setActiveHref(link.href); }}
               >
                 {link.label}
               </Link>

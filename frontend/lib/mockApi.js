@@ -26,6 +26,24 @@ function err(message, status = 400) {
   throw e;
 }
 
+// Produce a real base64url-encoded JWT payload so the Edge middleware can
+// decode the role without signature verification.
+function makeMockJwt(user) {
+  const b64url = (obj) =>
+    btoa(JSON.stringify(obj)).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+  const header  = b64url({ alg: 'none', typ: 'JWT' });
+  const payload = b64url({
+    _id:   user._id,
+    id:    user._id,
+    role:  user.role,
+    name:  user.name,
+    email: user.email,
+    iat:   Math.floor(Date.now() / 1000),
+    exp:   Math.floor(Date.now() / 1000) + 7 * 24 * 3600,
+  });
+  return `${header}.${payload}.mock`;
+}
+
 // ─── Mock DB (in-memory, resets on hard reload) ───────────────────────────────
 
 const MOCK_USERS = [
@@ -456,7 +474,7 @@ async function handlePost(path, body = {}) {
     if (password !== 'demo1234') err('Invalid email or password', 401);
     if (user.status === 'suspended') err('Account suspended', 403);
     _sessionUser = user;
-    return ok({ token: `mock_token_${user._id}_${Date.now()}`, user });
+    return ok({ token: makeMockJwt(user), user });
   }
 
   // ── Signup ────────────────────────────────────────────────────────────────
@@ -472,7 +490,7 @@ async function handlePost(path, body = {}) {
     };
     MOCK_USERS.push(newUser);
     _sessionUser = newUser;
-    return ok({ token: `mock_token_${newUser._id}`, user: newUser }, 201);
+    return ok({ token: makeMockJwt(newUser), user: newUser }, 201);
   }
 
   // ── Create Booking ────────────────────────────────────────────────────────

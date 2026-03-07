@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { use, useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -120,7 +120,7 @@ function CheckoutContent({ eventId }) {
 
   if (authLoading || eventLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#07070e]">
         <Spinner size="lg" />
       </div>
     );
@@ -130,12 +130,12 @@ function CheckoutContent({ eventId }) {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-[#07070e]">
         <Navbar />
         <div className="text-center py-24">
-          <AlertCircle className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 font-medium">Event not found.</p>
-          <Link href="/events" className="text-brand-600 hover:underline text-sm mt-2 inline-block">Back to events</Link>
+          <AlertCircle className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+          <p className="text-gray-400 font-medium">Event not found.</p>
+          <Link href="/events" className="text-brand-400 hover:underline text-sm mt-2 inline-block">Back to events</Link>
         </div>
       </div>
     );
@@ -143,23 +143,23 @@ function CheckoutContent({ eventId }) {
 
   if (selectedTickets.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-[#07070e]">
         <Navbar />
         <div className="text-center py-24">
-          <Ticket className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 font-medium">No tickets selected.</p>
-          <Link href={`/events/${eventId}`} className="text-brand-600 hover:underline text-sm mt-2 inline-block">Select tickets</Link>
+          <Ticket className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+          <p className="text-gray-400 font-medium">No tickets selected.</p>
+          <Link href={`/events/${eventId}`} className="text-brand-400 hover:underline text-sm mt-2 inline-block">Select tickets</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#07070e]">
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-4 py-10">
-        <h1 className="text-2xl font-extrabold text-gray-900 mb-8">Checkout</h1>
+        <h1 className="text-2xl font-extrabold text-white mb-8">Checkout</h1>
 
         {/* Step Indicator */}
         <div className="flex items-center gap-0 mb-10">
@@ -167,14 +167,14 @@ function CheckoutContent({ eventId }) {
             <div key={s.id} className="flex items-center flex-1">
               <div className={`flex items-center justify-center w-9 h-9 rounded-full font-bold text-sm border-2 transition-colors ${
                 step > s.id ? 'bg-brand-600 border-brand-600 text-white'
-                  : step === s.id ? 'border-brand-600 text-brand-600 bg-white'
-                  : 'border-gray-200 text-gray-400 bg-white'
+                  : step === s.id ? 'border-brand-600 text-brand-600 bg-[#07070e]'
+                  : 'border-white/20 text-gray-500 bg-[#07070e]'
               }`}>
                 {step > s.id ? <Check className="w-4 h-4" /> : s.id}
               </div>
-              <span className={`ml-2 text-sm font-medium hidden sm:block ${step >= s.id ? 'text-gray-800' : 'text-gray-400'}`}>{s.label}</span>
+              <span className={`ml-2 text-sm font-medium hidden sm:block ${step >= s.id ? 'text-white' : 'text-gray-500'}`}>{s.label}</span>
               {idx < STEPS.length - 1 && (
-                <div className={`flex-1 h-px mx-3 ${step > s.id ? 'bg-brand-600' : 'bg-gray-200'}`} />
+                <div className={`flex-1 h-px mx-3 ${step > s.id ? 'bg-brand-600' : 'bg-white/10'}`} />
               )}
             </div>
           ))}
@@ -187,9 +187,9 @@ function CheckoutContent({ eventId }) {
 
             {/* Step 1: Attendee Details */}
             {step === 1 && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h2 className="font-bold text-lg text-gray-900 mb-5 flex items-center gap-2">
-                  <User className="w-5 h-5 text-brand-600" /> Attendee Details
+              <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6">
+                <h2 className="font-bold text-lg text-white mb-5 flex items-center gap-2">
+                  <User className="w-5 h-5 text-brand-400" /> Attendee Details
                 </h2>
                 <form onSubmit={attendeeForm.handleSubmit(onAttendeeSubmit)} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -216,9 +216,9 @@ function CheckoutContent({ eventId }) {
 
             {/* Step 2: Payment */}
             {step === 2 && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h2 className="font-bold text-lg text-gray-900 mb-5 flex items-center gap-2">
-                  <CreditCard className="w-5 h-5 text-brand-600" /> Payment Details
+              <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6">
+                <h2 className="font-bold text-lg text-white mb-5 flex items-center gap-2">
+                  <CreditCard className="w-5 h-5 text-brand-400" /> Payment Details
                 </h2>
                 <form onSubmit={paymentForm.handleSubmit(onPaymentSubmit)} className="space-y-4">
                   {/* Promo code */}
@@ -248,7 +248,7 @@ function CheckoutContent({ eventId }) {
                       error={paymentForm.formState.errors.cvv?.message} />
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs text-gray-400 bg-gray-50 rounded-xl p-3">
+                  <div className="flex items-center gap-2 text-xs text-gray-400 bg-white/[.04] rounded-xl p-3">
                     <Lock className="w-3.5 h-3.5 text-green-500 shrink-0" />
                     Your payment is protected with 256-bit SSL encryption. We never store card details.
                   </div>
@@ -265,22 +265,22 @@ function CheckoutContent({ eventId }) {
 
             {/* Step 3: Confirmation */}
             {step === 3 && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Check className="w-8 h-8 text-green-600" />
+              <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-8 text-center">
+                <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-8 h-8 text-green-400" />
                 </div>
-                <h2 className="text-2xl font-extrabold text-gray-900 mb-2">Booking Confirmed!</h2>
-                <p className="text-gray-500 mb-2">
+                <h2 className="text-2xl font-extrabold text-white mb-2">Booking Confirmed!</h2>
+                <p className="text-gray-400 mb-2">
                   Your QR tickets have been sent to <strong>{attendeeData?.email}</strong>
                 </p>
-                <p className="text-sm text-gray-400 mb-8">
+                <p className="text-sm text-gray-500 mb-8">
                   Check your inbox and spam folder. Tickets are also available in My Tickets.
                 </p>
                 <div className="flex flex-col gap-3">
                   <Button className="w-full" size="lg" onClick={() => router.push('/my-tickets')}>
                     <Ticket className="w-4 h-4" /> View My Tickets
                   </Button>
-                  <Link href="/events" className="text-sm text-brand-600 hover:underline">Browse more events</Link>
+                  <Link href="/events" className="text-sm text-brand-400 hover:underline">Browse more events</Link>
                 </div>
               </div>
             )}
@@ -288,11 +288,11 @@ function CheckoutContent({ eventId }) {
 
           {/* Right: Order Summary */}
           <div className="w-full lg:w-72 shrink-0">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sticky top-24">
-              <h3 className="font-bold text-gray-900 mb-4">Order Summary</h3>
+            <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-5 sticky top-24">
+              <h3 className="font-bold text-white mb-4">Order Summary</h3>
 
-              <div className="mb-4 pb-4 border-b border-gray-100">
-                <p className="font-semibold text-sm text-gray-800 leading-snug mb-1">{event.title}</p>
+              <div className="mb-4 pb-4 border-b border-white/[.08]">
+                <p className="font-semibold text-sm text-gray-100 leading-snug mb-1">{event.title}</p>
                 <p className="text-xs text-gray-400">{formatDate(event.startDate)}</p>
                 <p className="text-xs text-gray-400">{event.venue?.address}, {event.venue?.city}</p>
               </div>
@@ -300,20 +300,20 @@ function CheckoutContent({ eventId }) {
               <div className="space-y-2 mb-4">
                 {selectedTickets.map((t) => (
                   <div key={t.name} className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">{t.name} Ã— {t.quantity}</span>
-                    <span className="font-medium">{formatCurrency(t.price * t.quantity)}</span>
+                    <span className="text-gray-400">{t.name} × {t.quantity}</span>
+                    <span className="font-medium text-gray-200">{formatCurrency(t.price * t.quantity)}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="space-y-1.5 pt-3 border-t border-gray-100 text-sm">
-                <div className="flex justify-between text-gray-500">
+              <div className="space-y-1.5 pt-3 border-t border-white/[.08] text-sm">
+                <div className="flex justify-between text-gray-400">
                   <span>Subtotal</span><span>{formatCurrency(subtotal)}</span>
                 </div>
-                <div className="flex justify-between text-gray-500">
+                <div className="flex justify-between text-gray-400">
                   <span>Platform fee (5%)</span><span>{formatCurrency(fee)}</span>
                 </div>
-                <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t border-gray-100">
+                <div className="flex justify-between font-bold text-white text-base pt-2 border-t border-white/[.08]">
                   <span>Total</span><span>{formatCurrency(total)}</span>
                 </div>
               </div>
@@ -329,7 +329,7 @@ function CheckoutContent({ eventId }) {
 }
 
 export default function CheckoutPage({ params }) {
-  const { eventId } = use(params);
+  const { eventId } = params;
   return (
     <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Spinner size="lg" /></div>}>
       <CheckoutContent eventId={eventId} />

@@ -84,8 +84,8 @@ export default function AdminUsersPage() {
   return (
     <DashboardLayout>
       <div className="mb-6">
-        <h1 className="text-2xl font-extrabold text-gray-900">User Management</h1>
-        <p className="text-sm text-gray-500 mt-0.5">{total} total users</p>
+        <h1 className="text-2xl font-extrabold text-white">User Management</h1>
+        <p className="text-sm text-gray-400 mt-0.5">{total} total users</p>
       </div>
 
       <div className="flex gap-2 flex-wrap mb-4">
@@ -94,7 +94,7 @@ export default function AdminUsersPage() {
             key={t.value}
             onClick={() => setFilter(t.value)}
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-              filter === t.value ? 'bg-brand-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+              filter === t.value ? 'bg-brand-600 text-white' : 'bg-white/[.05] border border-white/[.10] text-gray-400 hover:bg-white/[.08] hover:text-white'
             }`}
           >
             {t.label}
@@ -107,7 +107,7 @@ export default function AdminUsersPage() {
         <input type="text" placeholder="Search users..." value={query} onChange={(e) => setQuery(e.target.value)} className="input-field pl-10" />
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-[#111118] rounded-2xl border border-white/[.08] overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-16"><Spinner size="lg" /></div>
         ) : users.length === 0 ? (
@@ -115,7 +115,7 @@ export default function AdminUsersPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-100">
+              <thead className="bg-white/[.04] border-b border-white/[.07]">
                 <tr>
                   <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase">User</th>
                   <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase hidden sm:table-cell">Email</th>
@@ -124,25 +124,25 @@ export default function AdminUsersPage() {
                   <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-white/[.05]">
                 {users.map((u) => {
                   const s = statusMap[u.status] || statusMap.active;
                   return (
-                    <tr key={u._id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={u._id} className="hover:bg-white/[.03] transition-colors">
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold text-sm shrink-0">
+                          <div className="w-8 h-8 bg-brand-500/10 rounded-full flex items-center justify-center text-brand-400 font-bold text-sm shrink-0">
                             {u.name?.[0] || '?'}
                           </div>
-                          <span className="font-medium text-gray-800">{u.name}</span>
+                          <span className="font-medium text-gray-200">{u.name}</span>
                         </div>
                       </td>
-                      <td className="py-3.5 px-4 text-gray-500 hidden sm:table-cell">{u.email}</td>
+                      <td className="py-3.5 px-4 text-gray-400 hidden sm:table-cell">{u.email}</td>
                       <td className="py-3.5 px-4">
                         <select
                           value={u.role}
                           onChange={(e) => changeRole(u._id, e.target.value)}
-                          className="text-xs border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-brand-400 capitalize cursor-pointer"
+                          className="text-xs border border-white/[.10] rounded-lg px-2 py-1 bg-[#14141f] text-gray-300 focus:outline-none focus:ring-1 focus:ring-brand-400 capitalize cursor-pointer"
                         >
                           {ROLE_OPTIONS.map((r) => (
                             <option key={r} value={r} className="capitalize">{r}</option>
@@ -153,11 +153,11 @@ export default function AdminUsersPage() {
                       <td className="py-3.5 px-4">
                         <div className="flex items-center justify-end gap-1.5">
                           {u.status !== 'suspended' ? (
-                            <button onClick={() => updateStatus(u._id, 'suspend')} className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors" title="Suspend">
+                            <button onClick={() => updateStatus(u._id, 'suspend')} className="p-1.5 text-gray-400 hover:text-red-400 rounded-lg hover:bg-red-500/10 transition-colors" title="Suspend">
                               <Ban className="w-4 h-4" />
                             </button>
                           ) : (
-                            <button onClick={() => updateStatus(u._id, 'activate')} className="p-1.5 text-gray-400 hover:text-green-600 rounded-lg hover:bg-green-50 transition-colors" title="Activate">
+                            <button onClick={() => updateStatus(u._id, 'activate')} className="p-1.5 text-gray-400 hover:text-green-400 rounded-lg hover:bg-green-500/10 transition-colors" title="Activate">
                               <UserCheck className="w-4 h-4" />
                             </button>
                           )}

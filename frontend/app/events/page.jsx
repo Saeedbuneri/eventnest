@@ -44,11 +44,11 @@ function EventsContent() {
     : 'All Events';
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#07070e]">
       <Navbar />
 
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-brand-600 to-purple-600 text-white py-10">
+      <div className="bg-gradient-to-r from-brand-700/80 to-purple-700/80 border-b border-white/[.07] text-white py-10">
         <div className="max-w-7xl mx-auto px-4">
           <h1 className="text-3xl font-extrabold mb-1">{heading}</h1>
           <p className="text-brand-100 text-sm">
@@ -65,23 +65,23 @@ function EventsContent() {
               <p className="text-sm text-gray-500">
                 {loading ? 'Loading...' : `${events.length} results`}
               </p>
-              <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-lg">
-                <button onClick={() => setView('grid')} className={`p-1.5 rounded ${view === 'grid' ? 'bg-white shadow-sm' : ''} transition-colors`} title="Grid view">
-                  <Grid3x3 className="w-4 h-4 text-gray-600" />
+              <div className="flex items-center gap-2 bg-white/[.06] p-1 rounded-lg border border-white/[.07]">
+                <button onClick={() => setView('grid')} className={`p-1.5 rounded transition-colors ${view === 'grid' ? 'bg-white/[.12] text-white shadow-sm' : 'text-gray-600 hover:text-gray-300'}`} title="Grid view">
+                  <Grid3x3 className="w-4 h-4" />
                 </button>
-                <button onClick={() => setView('list')} className={`p-1.5 rounded ${view === 'list' ? 'bg-white shadow-sm' : ''} transition-colors`} title="List view">
-                  <List className="w-4 h-4 text-gray-600" />
+                <button onClick={() => setView('list')} className={`p-1.5 rounded transition-colors ${view === 'list' ? 'bg-white/[.12] text-white shadow-sm' : 'text-gray-600 hover:text-gray-300'}`} title="List view">
+                  <List className="w-4 h-4" />
                 </button>
               </div>
             </div>
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-                {[...Array(6)].map((_, i) => (<div key={i} className="rounded-2xl bg-gray-100 animate-pulse h-72" />))}
+                {[...Array(6)].map((_, i) => (<div key={i} className="rounded-2xl bg-white/[.06] animate-pulse h-72" />))}
               </div>
             ) : events.length === 0 ? (
               <div className="text-center py-24">
-                <Search className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-700 mb-2">No events found</h3>
+                <Search className="w-12 h-12 text-gray-700 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">No events found</h3>
                 <p className="text-gray-500 text-sm">Try adjusting your filters or search query</p>
               </div>
             ) : (

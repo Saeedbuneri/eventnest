@@ -163,8 +163,8 @@ export default function CreateEventPage() {
     <DashboardLayout>
       <div className="max-w-2xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-extrabold text-gray-900">Create New Event</h1>
-          <p className="text-sm text-gray-500 mt-1">Fill in the details to publish your event</p>
+          <h1 className="text-2xl font-extrabold text-white">Create New Event</h1>
+          <p className="text-sm text-gray-400 mt-1">Fill in the details to publish your event</p>
         </div>
 
         {/* Step Indicator */}
@@ -175,17 +175,17 @@ export default function CreateEventPage() {
                 onClick={() => step > s.id && setStep(s.id)}
                 className={`flex items-center justify-center w-9 h-9 rounded-full font-bold text-sm border-2 transition-colors ${
                   step > s.id  ? 'bg-brand-600 border-brand-600 text-white cursor-pointer hover:bg-brand-700'
-                  : step === s.id ? 'border-brand-600 text-brand-600 bg-white'
-                  : 'border-gray-200 text-gray-400 bg-white'
+                  : step === s.id ? 'border-brand-600 text-brand-600 bg-[#07070e]'
+                  : 'border-white/20 text-gray-500 bg-[#07070e]'
                 }`}
               >
                 {step > s.id ? <Check className="w-4 h-4" /> : s.id}
               </button>
-              <span className={`ml-2 text-xs font-medium hidden sm:block ${step >= s.id ? 'text-gray-700' : 'text-gray-400'}`}>
+              <span className={`ml-2 text-xs font-medium hidden sm:block ${step >= s.id ? 'text-gray-200' : 'text-gray-500'}`}>
                 {s.label}
               </span>
               {idx < STEPS.length - 1 && (
-                <div className={`flex-1 h-px mx-3 ${step > s.id ? 'bg-brand-400' : 'bg-gray-200'}`} />
+                <div className={`flex-1 h-px mx-3 ${step > s.id ? 'bg-brand-400' : 'bg-white/10'}`} />
               )}
             </div>
           ))}
@@ -193,8 +193,8 @@ export default function CreateEventPage() {
 
         {/* ── Step 1: Basic Info ─────────────────────────────────────────── */}
         {step === 1 && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
-            <h2 className="font-bold text-gray-900 text-lg">Event Details</h2>
+          <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6 space-y-5">
+            <h2 className="font-bold text-white text-lg">Event Details</h2>
 
             <Input label="Event Title" placeholder="e.g. TechFest 2026 — Innovation Summit"
               {...basicForm.register('title')} error={basicForm.formState.errors.title?.message} />
@@ -248,14 +248,14 @@ export default function CreateEventPage() {
 
         {/* ── Step 2: Ticket Config ──────────────────────────────────────── */}
         {step === 2 && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
-            <h2 className="font-bold text-gray-900 text-lg">Ticket Configuration</h2>
+          <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6 space-y-5">
+            <h2 className="font-bold text-white text-lg">Ticket Configuration</h2>
 
             <div className="space-y-4">
               {fields.map((field, idx) => (
-                <div key={field.id} className="border border-gray-100 rounded-xl p-4 space-y-3">
+                <div key={field.id} className="border border-white/[.08] rounded-xl p-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-sm text-gray-700">Ticket Type #{idx + 1}</span>
+                    <span className="font-semibold text-sm text-gray-300">Ticket Type #{idx + 1}</span>
                     {fields.length > 1 && (
                       <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-600 transition-colors p-1">
                         <Trash2 className="w-4 h-4" />
@@ -284,7 +284,7 @@ export default function CreateEventPage() {
             <button
               type="button"
               onClick={() => append({ name: '', price: 0, quantity: 50, maxPerUser: 10 })}
-              className="flex items-center gap-2 text-brand-600 hover:text-brand-700 text-sm font-medium py-2"
+              className="flex items-center gap-2 text-brand-400 hover:text-brand-300 text-sm font-medium py-2"
             >
               <Plus className="w-4 h-4" /> Add Ticket Type
             </button>
@@ -306,8 +306,8 @@ export default function CreateEventPage() {
 
         {/* ── Step 3: Advanced Settings ─────────────────────────────────── */}
         {step === 3 && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
-            <h2 className="font-bold text-gray-900 text-lg">Advanced Settings</h2>
+          <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6 space-y-5">
+            <h2 className="font-bold text-white text-lg">Advanced Settings</h2>
 
             <Select
               label="Refund Policy"
@@ -327,11 +327,11 @@ export default function CreateEventPage() {
               <div className="flex gap-3">
                 {[{ v: true, l: '🌍 Public' }, { v: false, l: '🔒 Private' }].map(({ v, l }) => (
                   <label key={String(v)} className={`flex-1 flex items-center gap-2 p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
-                    settingsForm.watch('isPublic') === v ? 'border-brand-500 bg-brand-50' : 'border-gray-200'
+                    settingsForm.watch('isPublic') === v ? 'border-brand-500 bg-brand-500/10' : 'border-white/20'
                   }`}>
                     <input type="radio" className="text-brand-600" value={String(v)}
                       {...settingsForm.register('isPublic', { setValueAs: (v) => v === 'true' })} />
-                    <span className="text-sm font-medium text-gray-800">{l}</span>
+                    <span className="text-sm font-medium text-gray-200">{l}</span>
                   </label>
                 ))}
               </div>
@@ -357,25 +357,25 @@ export default function CreateEventPage() {
 
         {/* ── Step 4: Preview & Publish ─────────────────────────────────── */}
         {step === 4 && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-6">
-            <h2 className="font-bold text-gray-900 text-lg">Preview & Publish</h2>
+          <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6 space-y-6">
+            <h2 className="font-bold text-white text-lg">Preview & Publish</h2>
 
             {/* Summary */}
-            <div className="space-y-3 bg-gray-50 rounded-xl p-4 text-sm">
-              <p><span className="font-semibold text-gray-700">Title:</span> <span className="text-gray-600">{formData.title}</span></p>
-              <p><span className="font-semibold text-gray-700">Category:</span> <span className="text-gray-600 capitalize">{formData.category}</span></p>
-              <p><span className="font-semibold text-gray-700">Location:</span> <span className="text-gray-600">{formData.address}, {formData.city}</span></p>
-              <p><span className="font-semibold text-gray-700">Start:</span> <span className="text-gray-600">{formData.startDate} at {formData.startTime}</span></p>
-              <p><span className="font-semibold text-gray-700">End:</span> <span className="text-gray-600">{formData.endDate} at {formData.endTime}</span></p>
-              <p><span className="font-semibold text-gray-700">Ticket Types:</span> <span className="text-gray-600">{formData.ticketTypes?.length || 0}</span></p>
-              <p><span className="font-semibold text-gray-700">Refund Policy:</span> <span className="text-gray-600 capitalize">{formData.refundPolicy?.replace('-', ' ')}</span></p>
+            <div className="space-y-3 bg-white/[.04] rounded-xl p-4 text-sm">
+              <p><span className="font-semibold text-gray-300">Title:</span> <span className="text-gray-400">{formData.title}</span></p>
+              <p><span className="font-semibold text-gray-300">Category:</span> <span className="text-gray-400 capitalize">{formData.category}</span></p>
+              <p><span className="font-semibold text-gray-300">Location:</span> <span className="text-gray-400">{formData.address}, {formData.city}</span></p>
+              <p><span className="font-semibold text-gray-300">Start:</span> <span className="text-gray-400">{formData.startDate} at {formData.startTime}</span></p>
+              <p><span className="font-semibold text-gray-300">End:</span> <span className="text-gray-400">{formData.endDate} at {formData.endTime}</span></p>
+              <p><span className="font-semibold text-gray-300">Ticket Types:</span> <span className="text-gray-400">{formData.ticketTypes?.length || 0}</span></p>
+              <p><span className="font-semibold text-gray-300">Refund Policy:</span> <span className="text-gray-400 capitalize">{formData.refundPolicy?.replace('-', ' ')}</span></p>
             </div>
 
             {bannerUrl && (
               <img src={bannerUrl} alt="" className="w-full h-40 object-cover rounded-xl" />
             )}
 
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-sm text-amber-800">
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3.5 text-sm text-amber-300">
               ⚠️ Once published, your event will be visible to all users. You can still edit it afterwards.
             </div>
 

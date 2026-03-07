@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { use, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,7 +18,7 @@ import { api } from '@/lib/api';
 import toast from 'react-hot-toast';
 
 export default function EventDetailPage({ params }) {
-  const { id }    = use(params);
+  const { id }    = params;
   const router    = useRouter();
   const [liked,   setLiked]   = useState(false);
   const [event,   setEvent]   = useState(null);
@@ -62,27 +62,27 @@ export default function EventDetailPage({ params }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#07070e]">
         <Navbar />
-        <div className="relative w-full h-72 sm:h-96 bg-gray-200 animate-pulse" />
+        <div className="relative w-full h-72 sm:h-96 bg-white/[.07] animate-pulse" />
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="flex-1 space-y-4">
-              <div className="h-10 bg-gray-100 rounded-xl animate-pulse w-3/4" />
-              <div className="h-4 bg-gray-100 rounded animate-pulse w-1/2" />
+              <div className="h-10 bg-white/[.06] rounded-xl animate-pulse w-3/4" />
+              <div className="h-4 bg-white/[.05] rounded animate-pulse w-1/2" />
               <div className="grid grid-cols-2 gap-4">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="h-20 bg-gray-100 rounded-xl animate-pulse" />
+                  <div key={i} className="h-20 bg-white/[.06] rounded-xl animate-pulse" />
                 ))}
               </div>
               <div className="space-y-2 pt-4">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="h-4 bg-gray-100 rounded animate-pulse" style={{ width: `${90 - i * 10}%` }} />
+                  <div key={i} className="h-4 bg-white/[.05] rounded animate-pulse" style={{ width: `${90 - i * 10}%` }} />
                 ))}
               </div>
             </div>
             <div className="w-full lg:w-80 shrink-0">
-              <div className="h-64 bg-gray-100 rounded-2xl animate-pulse" />
+              <div className="h-64 bg-white/[.06] rounded-2xl animate-pulse" />
             </div>
           </div>
         </div>
@@ -93,10 +93,10 @@ export default function EventDetailPage({ params }) {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#07070e]">
         <Navbar />
         <div className="flex flex-col items-center justify-center py-32 text-center px-4">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Event not found</h2>
+          <h2 className="text-2xl font-bold text-white mb-2">Event not found</h2>
           <p className="text-gray-500 mb-6">This event may have been removed or the link is incorrect.</p>
           <Link href="/events" className="btn-primary py-2 px-5 text-sm rounded-lg">Browse Events</Link>
         </div>
@@ -106,11 +106,11 @@ export default function EventDetailPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#07070e]">
       <Navbar />
 
       {/* Banner */}
-      <div className="relative w-full h-72 sm:h-96 bg-gray-200">
+      <div className="relative w-full h-72 sm:h-96 bg-white/[.07]">
         <Image
           src={event.bannerImage || 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200'}
           alt={event.title}
@@ -144,23 +144,23 @@ export default function EventDetailPage({ params }) {
 
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-extrabold text-gray-900 leading-tight">{event.title}</h1>
-                <p className="text-gray-500 mt-1 text-sm">
-                  Hosted by <span className="font-semibold text-gray-700">{organizerName}</span>
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">{event.title}</h1>
+                <p className="text-gray-400 mt-1 text-sm">
+                  Hosted by <span className="font-semibold text-gray-300">{organizerName}</span>
                 </p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => { setLiked(!liked); toast.success(liked ? 'Removed from saved' : 'Event saved!'); }}
                   aria-label={liked ? 'Remove from saved' : 'Save event'}
-                  className={`p-2.5 rounded-xl border transition-colors ${liked ? 'bg-red-50 border-red-200 text-red-500' : 'border-gray-200 text-gray-400 hover:border-red-200 hover:text-red-500'}`}
+                  className={`p-2.5 rounded-xl border transition-colors ${liked ? 'bg-red-500/10 border-red-500/30 text-red-400' : 'border-white/[.10] text-gray-500 hover:border-red-500/30 hover:text-red-400'}`}
                 >
                   <Heart className={`w-5 h-5 ${liked ? 'fill-current' : ''}`} />
                 </button>
                 <button
                   onClick={handleShare}
                   aria-label="Share event"
-                  className="p-2.5 rounded-xl border border-gray-200 text-gray-400 hover:border-brand-200 hover:text-brand-500 transition-colors"
+                  className="p-2.5 rounded-xl border border-white/[.10] text-gray-500 hover:border-brand-500/30 hover:text-brand-400 transition-colors"
                 >
                   <Share2 className="w-5 h-5" />
                 </button>
@@ -175,13 +175,13 @@ export default function EventDetailPage({ params }) {
                 { icon: MapPin,   label: 'Location',  value: `${event.venue?.address}, ${event.venue?.city}` },
                 { icon: Users,    label: 'Attendees', value: `${soldCount.toLocaleString()} going` },
               ].map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex items-start gap-3 bg-gray-50 rounded-xl p-3.5">
-                  <div className="w-9 h-9 bg-brand-100 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon className="w-4 h-4 text-brand-600" />
+                <div key={label} className="flex items-start gap-3 bg-white/[.04] border border-white/[.06] rounded-xl p-3.5">
+                  <div className="w-9 h-9 bg-brand-500/20 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon className="w-4 h-4 text-brand-400" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 font-medium">{label}</p>
-                    <p className="text-sm font-semibold text-gray-800 mt-0.5">{value}</p>
+                    <p className="text-xs text-gray-600 font-medium">{label}</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">{value}</p>
                   </div>
                 </div>
               ))}
@@ -189,24 +189,24 @@ export default function EventDetailPage({ params }) {
 
             {/* Description */}
             <div>
-              <h2 className="font-bold text-lg text-gray-900 mb-3">About this event</h2>
-              <p className="text-gray-600 leading-relaxed whitespace-pre-line">{event.description}</p>
+              <h2 className="font-bold text-lg text-white mb-3">About this event</h2>
+              <p className="text-gray-400 leading-relaxed whitespace-pre-line">{event.description}</p>
             </div>
 
 
             {/* Venue */}
             <div>
-              <h2 className="font-bold text-lg text-gray-900 mb-3">Venue</h2>
-              <div className="h-48 bg-gray-100 rounded-2xl flex items-center justify-center border border-gray-200">
+              <h2 className="font-bold text-lg text-white mb-3">Venue</h2>
+              <div className="h-48 bg-white/[.04] border border-white/[.07] rounded-2xl flex items-center justify-center">
                 <div className="text-center">
-                  <MapPin className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-gray-600">{event.venue?.address}</p>
-                  <p className="text-xs text-gray-400">{event.venue?.city}</p>
+                  <MapPin className="w-8 h-8 text-gray-700 mx-auto mb-2" />
+                  <p className="text-sm font-medium text-gray-300">{event.venue?.address}</p>
+                  <p className="text-xs text-gray-500">{event.venue?.city}</p>
                   <a
                     href={"https://maps.google.com?q=" + encodeURIComponent((event.venue?.address || '') + " " + (event.venue?.city || ''))}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 mt-2 text-xs text-brand-600 hover:underline"
+                    className="inline-flex items-center gap-1 mt-2 text-xs text-brand-400 hover:text-brand-300 transition-colors"
                   >
                     Open in Maps <ExternalLink className="w-3 h-3" />
                   </a>
@@ -217,7 +217,7 @@ export default function EventDetailPage({ params }) {
             {/* Related Events */}
             {related.length > 0 && (
               <div>
-                <h2 className="font-bold text-lg text-gray-900 mb-4">
+                <h2 className="font-bold text-lg text-white mb-4">
                   More {category?.label} Events
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -231,7 +231,7 @@ export default function EventDetailPage({ params }) {
           <div className="w-full lg:w-80 shrink-0">
             <div className="sticky top-24">
               <TicketSelector ticketTypes={event.ticketTypes} onCheckout={handleCheckout} />
-              <p className="text-xs text-gray-400 text-center mt-3">
+              <p className="text-xs text-gray-600 text-center mt-3">
                 Secure checkout. Instant QR ticket delivery
               </p>
             </div>

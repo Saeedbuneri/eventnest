@@ -71,7 +71,7 @@ export default function ProfilePage() {
 
   if (authLoading || loadingProfile) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-[#07070e]">
         <Navbar />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="animate-spin w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full" />
@@ -81,28 +81,28 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#07070e]">
       <Navbar />
 
       <div className="max-w-2xl mx-auto px-4 py-10">
-        <Link href="/events" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-brand-600 mb-6">
+        <Link href="/events" className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-brand-400 mb-6">
           <ArrowLeft className="w-4 h-4" /> Back to events
         </Link>
 
-        <h1 className="text-2xl font-extrabold text-gray-900 mb-8">My Profile</h1>
+        <h1 className="text-2xl font-extrabold text-white mb-8">My Profile</h1>
 
         {/* Profile Info */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
+        <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6 mb-6">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center">
-              <User className="w-5 h-5 text-brand-600" />
+            <div className="w-10 h-10 rounded-xl bg-brand-500/10 flex items-center justify-center">
+              <User className="w-5 h-5 text-brand-400" />
             </div>
-            <h2 className="font-bold text-gray-900">Personal Information</h2>
+            <h2 className="font-bold text-white">Personal Information</h2>
           </div>
 
           <form onSubmit={handleProfileSave} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
               <Input
                 value={profile.name}
                 onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
@@ -111,7 +111,7 @@ export default function ProfilePage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
               <Input
                 type="email"
                 value={profile.email}
@@ -128,17 +128,17 @@ export default function ProfilePage() {
         </div>
 
         {/* Change Password */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-6">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center">
-              <Lock className="w-5 h-5 text-brand-600" />
+            <div className="w-10 h-10 rounded-xl bg-brand-500/10 flex items-center justify-center">
+              <Lock className="w-5 h-5 text-brand-400" />
             </div>
-            <h2 className="font-bold text-gray-900">Change Password</h2>
+            <h2 className="font-bold text-white">Change Password</h2>
           </div>
 
           <form onSubmit={handlePasswordSave} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Current Password</label>
               <Input
                 type="password"
                 value={passwords.current}
@@ -148,7 +148,7 @@ export default function ProfilePage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">New Password</label>
               <Input
                 type="password"
                 value={passwords.newPw}
@@ -158,7 +158,7 @@ export default function ProfilePage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Confirm New Password</label>
               <Input
                 type="password"
                 value={passwords.confirm}

@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { use, useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, Search, Download } from 'lucide-react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
@@ -11,7 +11,7 @@ import { api } from '@/lib/api';
 import { formatDateTime } from '@/lib/utils';
 
 export default function AttendeesPage({ params }) {
-  const { id }       = use(params);
+  const { id }       = params;
   const [query,      setQuery]      = useState('');
   const [attendees,  setAttendees]  = useState([]);
   const [eventTitle, setEventTitle] = useState('');

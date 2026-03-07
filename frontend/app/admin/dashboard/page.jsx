@@ -62,10 +62,10 @@ export default function AdminDashboard() {
     <DashboardLayout>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-extrabold text-gray-900">Admin Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Platform-wide overview</p>
+          <h1 className="text-2xl font-extrabold text-white">Admin Dashboard</h1>
+          <p className="text-sm text-gray-400 mt-0.5">Platform-wide overview</p>
         </div>
-        <div className="flex items-center gap-2 bg-brand-50 text-brand-700 px-3 py-2 rounded-xl text-sm font-medium">
+          <div className="flex items-center gap-2 bg-brand-500/10 text-brand-400 px-3 py-2 rounded-xl text-sm font-medium">
           <ShieldAlert className="w-4 h-4" /> Admin Mode
         </div>
       </div>
@@ -89,10 +89,10 @@ export default function AdminDashboard() {
             <TicketsChart data={revenue} />
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-5">
+          <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-5 mb-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-900">Recent Events</h3>
-              <Link href="/admin/events" className="text-sm text-brand-600 hover:underline flex items-center gap-1">
+              <h3 className="font-bold text-white">Recent Events</h3>
+              <Link href="/admin/events" className="text-sm text-brand-400 hover:underline flex items-center gap-1">
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -102,18 +102,18 @@ export default function AdminDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-100">
+                    <tr className="border-b border-white/[.07]">
                       {['Event','Organizer','Date','Status'].map((h) => (
                         <th key={h} className="text-left py-2.5 px-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">{h}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
+                  <tbody className="divide-y divide-white/[.05]">
                     {events.map((e) => (
-                      <tr key={e._id} className="hover:bg-gray-50">
-                        <td className="py-3 px-3 font-medium text-gray-800 line-clamp-1 max-w-[200px]">{e.title}</td>
-                        <td className="py-3 px-3 text-gray-500">{e.organizer?.name || ''}</td>
-                        <td className="py-3 px-3 text-gray-500 whitespace-nowrap">{formatDate(e.startDate || e.startTime)}</td>
+                      <tr key={e._id} className="hover:bg-white/[.03]">
+                        <td className="py-3 px-3 font-medium text-gray-200 line-clamp-1 max-w-[200px]">{e.title}</td>
+                        <td className="py-3 px-3 text-gray-400">{e.organizer?.name || ''}</td>
+                        <td className="py-3 px-3 text-gray-400 whitespace-nowrap">{formatDate(e.startDate || e.startTime)}</td>
                         <td className="py-3 px-3"><Badge variant={e.status === 'published' ? 'success' : 'warning'} dot>{e.status}</Badge></td>
                       </tr>
                     ))}
@@ -123,10 +123,10 @@ export default function AdminDashboard() {
             )}
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+          <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-900">Recent Users</h3>
-              <Link href="/admin/users" className="text-sm text-brand-600 hover:underline flex items-center gap-1">
+              <h3 className="font-bold text-white">Recent Users</h3>
+              <Link href="/admin/users" className="text-sm text-brand-400 hover:underline flex items-center gap-1">
                 View all <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -136,24 +136,24 @@ export default function AdminDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-100">
+                    <tr className="border-b border-white/[.07]">
                       {['User','Email','Role','Status'].map((h) => (
                         <th key={h} className="text-left py-2.5 px-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">{h}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
+                  <tbody className="divide-y divide-white/[.05]">
                     {users.map((u) => {
                       const s = statusMap[u.status] || statusMap.active;
                       return (
-                        <tr key={u._id} className="hover:bg-gray-50">
+                        <tr key={u._id} className="hover:bg-white/[.03]">
                           <td className="py-3.5 px-3">
                             <div className="flex items-center gap-2">
-                              <div className="w-7 h-7 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold text-xs shrink-0">{u.name?.[0] || '?'}</div>
-                              {u.name}
+                              <div className="w-7 h-7 bg-brand-500/10 rounded-full flex items-center justify-center text-brand-400 font-bold text-xs shrink-0">{u.name?.[0] || '?'}</div>
+                              <span className="text-gray-200">{u.name}</span>
                             </div>
                           </td>
-                          <td className="py-3.5 px-3 text-gray-500">{u.email}</td>
+                          <td className="py-3.5 px-3 text-gray-400">{u.email}</td>
                           <td className="py-3.5 px-3"><Badge variant={u.role === 'organizer' ? 'brand' : 'default'} className="capitalize">{u.role}</Badge></td>
                           <td className="py-3.5 px-3"><Badge variant={s.variant} dot>{s.label}</Badge></td>
                         </tr>

@@ -40,7 +40,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#07070e]">
       <Navbar />
 
       {/* Hero */}
@@ -59,16 +59,16 @@ export default function ContactPage() {
         {/* Info + FAQ */}
         <div className="space-y-8">
           <div>
-            <h2 className="text-xl font-black text-gray-900 mb-5">Contact Details</h2>
+            <h2 className="text-xl font-black text-white mb-5">Contact Details</h2>
             <ul className="space-y-4">
               {CONTACT_INFO.map(({ icon: Icon, label, value }) => (
                 <li key={label} className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-brand-50 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
-                    <Icon className="w-4 h-4 text-brand-600" />
+                  <div className="w-9 h-9 bg-brand-500/10 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
+                    <Icon className="w-4 h-4 text-brand-400" />
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">{label}</p>
-                    <p className="text-sm text-gray-700 mt-0.5">{value}</p>
+                    <p className="text-sm text-gray-300 mt-0.5">{value}</p>
                   </div>
                 </li>
               ))}
@@ -76,7 +76,7 @@ export default function ContactPage() {
           </div>
 
           {/* Embedded map placeholder */}
-          <div className="bg-[#f4f4f7] rounded-2xl overflow-hidden h-48 flex items-center justify-center border border-gray-100">
+          <div className="bg-white/[.04] rounded-2xl overflow-hidden h-48 flex items-center justify-center border border-white/[.07]">
             <div className="text-center text-gray-400 text-sm">
               <MapPin className="w-8 h-8 mx-auto mb-2 text-brand-300" />
               <p>F-7 Markaz, Islamabad</p>
@@ -86,19 +86,19 @@ export default function ContactPage() {
 
           {/* FAQ */}
           <div>
-            <h2 className="text-xl font-black text-gray-900 mb-4">FAQ</h2>
+            <h2 className="text-xl font-black text-white mb-4">FAQ</h2>
             <div className="space-y-2">
               {FAQS.map((faq, i) => (
-                <div key={i} className="border border-gray-100 rounded-xl overflow-hidden">
+                <div key={i} className="border border-white/[.07] rounded-xl overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-800 flex justify-between items-center hover:bg-gray-50 transition-colors"
+                    className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-100 flex justify-between items-center hover:bg-white/[.04] transition-colors"
                   >
                     {faq.q}
                     <span className="text-brand-500 text-lg leading-none ml-2">{openFaq === i ? '−' : '+'}</span>
                   </button>
                   {openFaq === i && (
-                    <div className="px-4 pb-4 text-sm text-gray-500 leading-relaxed border-t border-gray-50 pt-3 bg-gray-50">
+                    <div className="px-4 pb-4 text-sm text-gray-400 leading-relaxed border-t border-white/[.05] pt-3 bg-white/[.03]">
                       {faq.a}
                     </div>
                   )}
@@ -110,50 +110,50 @@ export default function ContactPage() {
 
         {/* Form */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+          <div className="bg-[#111118] rounded-2xl border border-white/[.08] p-8">
             {sent ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
                 <CheckCircle className="w-14 h-14 text-green-500 mb-4" />
-                <h3 className="text-2xl font-black text-gray-900 mb-2">Message Sent!</h3>
-                <p className="text-gray-500 max-w-xs">Our Islamabad support team will get back to you within a few hours (Mon–Sat, 9 AM – 7 PM PKT).</p>
-                <button onClick={() => { setSent(false); setForm({ name: '', email: '', subject: '', message: '' }); }} className="mt-6 text-brand-600 hover:underline text-sm font-semibold">
+                <h3 className="text-2xl font-black text-white mb-2">Message Sent!</h3>
+                <p className="text-gray-400 max-w-xs">Our Islamabad support team will get back to you within a few hours (Mon–Sat, 9 AM – 7 PM PKT).</p>
+                <button onClick={() => { setSent(false); setForm({ name: '', email: '', subject: '', message: '' }); }} className="mt-6 text-brand-400 hover:underline text-sm font-semibold">
                   Send another message
                 </button>
               </div>
             ) : (
               <>
-                <h2 className="text-2xl font-black text-gray-900 mb-1">Send us a message</h2>
+                <h2 className="text-2xl font-black text-white mb-1">Send us a message</h2>
                 <p className="text-gray-400 text-sm mb-6">Typically reply within 2–4 hours on weekdays.</p>
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Full Name</label>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Full Name</label>
                       <input
                         required
                         value={form.name}
                         onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                         placeholder="Ahmed Khan"
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 transition"
+                        className="w-full px-4 py-2.5 border border-white/[.10] rounded-xl text-sm text-white bg-[#14141f] placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500 transition"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Email</label>
+                      <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Email</label>
                       <input
                         required
                         type="email"
                         value={form.email}
                         onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                         placeholder="ahmed@example.pk"
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 transition"
+                        className="w-full px-4 py-2.5 border border-white/[.10] rounded-xl text-sm text-white bg-[#14141f] placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500 transition"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Subject</label>
+                    <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Subject</label>
                     <select
                       value={form.subject}
                       onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white transition"
+                      className="w-full px-4 py-2.5 border border-white/[.10] rounded-xl text-sm text-white bg-[#14141f] focus:outline-none focus:ring-2 focus:ring-brand-500 transition"
                     >
                       <option>Ticket issue</option>
                       <option>Refund request</option>
@@ -165,14 +165,14 @@ export default function ContactPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Message</label>
+                    <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Message</label>
                     <textarea
                       required
                       rows={5}
                       value={form.message}
                       onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                       placeholder="Describe your issue or question in detail..."
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none transition"
+                      className="w-full px-4 py-2.5 border border-white/[.10] rounded-xl text-sm text-white bg-[#14141f] placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none transition"
                     />
                   </div>
                   <button
